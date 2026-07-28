@@ -1,6 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: guayoscey-bot/ceysport
   branch: main
+  site_url: https://ceysport.vercel.app
 
 media_folder: "img/productos"
 public_folder: "/img/productos"
