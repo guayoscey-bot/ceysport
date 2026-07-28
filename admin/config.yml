@@ -3,6 +3,7 @@ backend:
   repo: guayoscey-bot/ceysport
   branch: main
   site_url: https://ceysport.vercel.app
+  base_url: https://decap-cms-oauth.netlify.app
 
 media_folder: "img/productos"
 public_folder: "/img/productos"
