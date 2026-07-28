@@ -13,158 +13,28 @@
             --card-bg: #ffffff;
             --text-color: #333333;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-        }
-
-        header h1 span {
-            color: var(--accent-color);
-        }
-
-        .admin-link {
-            color: white;
-            text-decoration: none;
-            background: #222;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            border: 1px solid #444;
-            transition: background 0.3s;
-        }
-
-        .admin-link:hover {
-            background: #444;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .banner {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .banner h2 {
-            font-size: 2rem;
-            color: var(--primary-color);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            background-color: #eee;
-        }
-
-        .product-info {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .product-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin: 0 0 0.5rem 0;
-            color: var(--primary-color);
-        }
-
-        .product-price {
-            font-size: 1.3rem;
-            color: #27ae60;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-sizes {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .product-desc {
-            font-size: 0.9rem;
-            color: #555;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .btn-whatsapp {
-            background-color: #25d366;
-            color: white;
-            text-align: center;
-            padding: 0.75rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        .btn-whatsapp:hover {
-            background-color: #1ebe5d;
-        }
-
-        .loading, .no-products {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem;
-            font-size: 1.1rem;
-            color: #666;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background-color: var(--primary-color);
-            color: white;
-            margin-top: 3rem;
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+        header { background-color: var(--primary-color); color: white; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        header h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; }
+        header h1 span { color: var(--accent-color); }
+        .admin-link { color: white; text-decoration: none; background: #222; padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.9rem; border: 1px solid #444; transition: background 0.3s; }
+        .admin-link:hover { background: #444; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .banner { text-align: center; margin-bottom: 2rem; }
+        .banner h2 { font-size: 2rem; color: var(--primary-color); }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+        .product-card { background: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .product-image { width: 100%; height: 250px; object-fit: cover; background-color: #eee; }
+        .product-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-title { font-size: 1.2rem; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--primary-color); }
+        .product-price { font-size: 1.3rem; color: #27ae60; font-weight: bold; margin-bottom: 0.5rem; }
+        .product-sizes { font-size: 0.9rem; color: #666; margin-bottom: 1rem; }
+        .product-desc { font-size: 0.9rem; color: #555; margin-bottom: 1.5rem; flex-grow: 1; }
+        .btn-whatsapp { background-color: #25d366; color: white; text-align: center; padding: 0.75rem; border-radius: 4px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
+        .btn-whatsapp:hover { background-color: #1ebe5d; }
+        .loading, .no-products { grid-column: 1 / -1; text-align: center; padding: 3rem; font-size: 1.1rem; color: #666; }
+        footer { text-align: center; padding: 2rem; background-color: var(--primary-color); color: white; margin-top: 3rem; }
     </style>
 </head>
 <body>
@@ -178,9 +48,8 @@
         <div class="banner">
             <h2>Catálogo de Productos</h2>
         </div>
-
         <div id="productos-container" class="products-grid">
-            <div class="loading">Cargando catálogo en tiempo real...</div>
+            <div class="loading">Cargando tus guayos...</div>
         </div>
     </div>
 
@@ -188,47 +57,35 @@
         <p>&copy; 2026 CEY SPORT - Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Script en tiempo real conectado directamente a GitHub -->
     <script>
         const REPO_OWNER = "guayoscey-bot";
         const REPO_NAME = "ceysport";
         const BRANCH = "main";
-        const PHONE_WHATSAPP = "573000000000"; // Reemplaza con tu número de WhatsApp real si deseas
+        const PHONE_WHATSAPP = "573000000000"; // Cambia por tu número real
 
-        async function cargarProductosGitHub() {
+        async function cargarProductos() {
             const container = document.getElementById('productos-container');
-            
             try {
-                // Consultar la API pública de GitHub para listar los archivos de la carpeta content/productos
                 const urlApi = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/productos?ref=${BRANCH}`;
                 const response = await fetch(urlApi);
-                
-                if (!response.ok) {
-                    throw new Error('No se pudo conectar con el repositorio');
-                }
+                if (!response.ok) throw new Error("Error al conectar con GitHub");
 
                 const files = await response.json();
-                
                 if (!files || files.length === 0) {
-                    container.innerHTML = `
-                        <div class="no-products">
-                            <p>No hay productos todavía. Agrega tus guayos desde el <a href="/admin/" style="color: #27ae60; font-weight: bold;">Panel de Administración</a>.</p>
-                        </div>
-                    `;
+                    container.innerHTML = `<div class="no-products"><p>No hay productos todavía.</p></div>`;
                     return;
                 }
 
-                container.innerHTML = ''; // Limpiar el cargando
+                container.innerHTML = '';
 
                 for (const file of files) {
                     if (file.name.endsWith('.json') || file.name.endsWith('.md')) {
-                        // Descargar el contenido de cada archivo de producto
                         const fileRes = await fetch(file.download_url);
                         const text = await fileRes.text();
                         
                         let producto = {};
                         if (file.name.endsWith('.json')) {
-                            producto = JSON.parse(text);
+                            try { producto = JSON.parse(text); } catch(e){}
                         } else {
                             producto = parseMarkdownFrontmatter(text);
                         }
@@ -236,28 +93,29 @@
                         const card = document.createElement('div');
                         card.className = 'product-card';
                         
-                        const mensaje = encodeURIComponent(`¡Hola! Estoy interesado en el producto: ${producto.nombre || 'Artículo'} con precio $${producto.precio || ''} y tallas ${producto.tallas || ''}`);
+                        const nombreProd = producto.nombre || "Guayos deportivos";
+                        const precioProd = producto.precio || "0";
+                        const tallasProd = producto.tallas || "Única";
+                        const descProd = producto.descripcion || "";
+                        const imgProd = producto.imagen || "https://via.placeholder.com/300";
+
+                        const mensaje = encodeURIComponent(`¡Hola! Estoy interesado en el producto: ${nombreProd} - Precio: $${precioProd}`);
 
                         card.innerHTML = `
-                            <img src="${producto.imagen || 'https://via.placeholder.com/300'}" alt="${producto.nombre || 'Producto'}" class="product-image">
+                            <img src="${imgProd}" alt="${nombreProd}" class="product-image">
                             <div class="product-info">
-                                <h3 class="product-title">${producto.nombre || 'Sin nombre'}</h3>
-                                <div class="product-price">$ ${producto.precio || '0'}</div>
-                                <div class="product-sizes"><strong>Tallas:</strong> ${producto.tallas || 'Única'}</div>
-                                <div class="product-desc">${producto.descripcion || ''}</div>
+                                <h3 class="product-title">${nombreProd}</h3>
+                                <div class="product-price">$ ${precioProd}</div>
+                                <div class="product-sizes"><strong>Tallas:</strong> ${tallasProd}</div>
+                                <div class="product-desc">${descProd}</div>
                                 <a href="https://wa.me/${PHONE_WHATSAPP}?text=${mensaje}" target="_blank" class="btn-whatsapp">Comprar por WhatsApp</a>
                             </div>
                         `;
                         container.appendChild(card);
                     }
                 }
-
             } catch (error) {
-                container.innerHTML = `
-                    <div class="no-products">
-                        <p>Error al cargar los productos en tiempo real. Comprueba tu conexión o agrega un producto desde el <a href="/admin/" style="color: #27ae60; font-weight: bold;">Panel de Administración</a>.</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="no-products"><p>Agrega productos desde el <a href="/admin/" style="color:#27ae60;">Panel de Administración</a>.</p></div>`;
             }
         }
 
@@ -278,7 +136,7 @@
             return data;
         }
 
-        cargarProductosGitHub();
+        cargarProductos();
     </script>
 </body>
 </html>
