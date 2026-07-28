@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - CEY SPORT</title>
+    <!-- Configuración explícita para evitar errores de ruta en el CMS -->
+    <script>
+      if (window.location.protocol === "file:") {
+        window.CMS_MANUAL_INIT = true;
+      }
+    </script>
     <!-- Incluimos Netlify Identity para el inicio de sesión seguro -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-    <!-- Script principal de Decap CMS -->
+    <!-- Script principal de Decap CMS apuntando de forma absoluta al archivo de configuración -->
+    <script>
+      window.CMS_CONFIGURATION_PATH = '/admin/config.yml';
+    </script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
