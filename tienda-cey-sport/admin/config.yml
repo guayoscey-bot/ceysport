@@ -1,0 +1,22 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "img/productos" # Carpeta donde se guardarán las imágenes que subas
+public_folder: "/img/productos"
+
+collections:
+  - name: "productos"
+    label: "Productos"
+    folder: "content/productos" # Carpeta donde se guardarán los datos de tus productos
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "ID Único", name: "id", widget: "string"}
+      - {label: "Nombre del Producto", name: "nombre", widget: "string"}
+      - {label: "Categoría", name: "Categoria", widget: "select", options: ["guayos", "sintetica", "futsal", "guantes", "accesorios"]}
+      - {label: "Marca / Tipo", name: "Marca", widget: "string", required: false}
+      - {label: "Precio (COP)", name: "precio", widget: "number"}
+      - {label: "Tallas (separadas por coma)", name: "tallas", widget: "string", default: "38, 39, 40, 41"}
+      - {label: "Imagen del Producto", name: "imagen_url", widget: "image"}
+      - {label: "Descripción", name: "descripcion", widget: "text", required: false}
