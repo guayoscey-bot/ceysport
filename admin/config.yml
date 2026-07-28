@@ -2,12 +2,8 @@ backend:
   name: github
   repo: guayoscey-bot/ceysport
   branch: main
-  base_url: https://api.github.com
-  auth_type: token
-  commit_messages:
-    create: "Crear producto {{slug}}"
-    update: "Actualizar producto {{slug}}"
-    delete: "Eliminar producto {{slug}}"
+  auth_type: implicit
+  app_id: ''
 
 media_folder: "img/productos"
 public_folder: "/img/productos"
