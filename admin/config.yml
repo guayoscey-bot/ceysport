@@ -2,10 +2,9 @@ backend:
   name: github
   repo: guayoscey-bot/ceysport
   branch: main
-  commit_messages:
-    create: "Crear {{slug}}"
-    update: "Actualizar {{slug}}"
-    delete: "Eliminar {{slug}}"
+  site_url: https://ceysport.vercel.app
+  base_url: https://decap-cms-oauth.netlify.app
+  client_id: Ov23liIujfecDZgLsNRE
 
 media_folder: "img/productos"
 public_folder: "/img/productos"
