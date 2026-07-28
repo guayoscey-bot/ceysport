@@ -180,7 +180,7 @@
         </div>
 
         <div id="productos-container" class="products-grid">
-            <div class="loading">Cargando catálogo...</div>
+            <div class="loading">Cargando catálogo en tiempo real...</div>
         </div>
     </div>
 
@@ -188,17 +188,97 @@
         <p>&copy; 2026 CEY SPORT - Todos los derechos reservados.</p>
     </footer>
 
+    <!-- Script en tiempo real conectado directamente a GitHub -->
     <script>
-        // Si no hay listado automático por restricciones del servidor, 
-        // mostramos la interfaz lista y un aviso claro para empezar a agregar productos.
-        window.addEventListener('DOMContentLoaded', () => {
+        const REPO_OWNER = "guayoscey-bot";
+        const REPO_NAME = "ceysport";
+        const BRANCH = "main";
+        const PHONE_WHATSAPP = "573000000000"; // Reemplaza con tu número de WhatsApp real si deseas
+
+        async function cargarProductosGitHub() {
             const container = document.getElementById('productos-container');
-            container.innerHTML = `
-                <div class="no-products">
-                    <p>¡Tu tienda está en línea! Para ver tus guayos y productos publicados, agrégalos desde el <a href="/admin/" style="color: #27ae60; font-weight: bold;">Panel de Administración</a>.</p>
-                </div>
-            `;
-        });
+            
+            try {
+                // Consultar la API pública de GitHub para listar los archivos de la carpeta content/productos
+                const urlApi = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/productos?ref=${BRANCH}`;
+                const response = await fetch(urlApi);
+                
+                if (!response.ok) {
+                    throw new Error('No se pudo conectar con el repositorio');
+                }
+
+                const files = await response.json();
+                
+                if (!files || files.length === 0) {
+                    container.innerHTML = `
+                        <div class="no-products">
+                            <p>No hay productos todavía. Agrega tus guayos desde el <a href="/admin/" style="color: #27ae60; font-weight: bold;">Panel de Administración</a>.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = ''; // Limpiar el cargando
+
+                for (const file of files) {
+                    if (file.name.endsWith('.json') || file.name.endsWith('.md')) {
+                        // Descargar el contenido de cada archivo de producto
+                        const fileRes = await fetch(file.download_url);
+                        const text = await fileRes.text();
+                        
+                        let producto = {};
+                        if (file.name.endsWith('.json')) {
+                            producto = JSON.parse(text);
+                        } else {
+                            producto = parseMarkdownFrontmatter(text);
+                        }
+
+                        const card = document.createElement('div');
+                        card.className = 'product-card';
+                        
+                        const mensaje = encodeURIComponent(`¡Hola! Estoy interesado en el producto: ${producto.nombre || 'Artículo'} con precio $${producto.precio || ''} y tallas ${producto.tallas || ''}`);
+
+                        card.innerHTML = `
+                            <img src="${producto.imagen || 'https://via.placeholder.com/300'}" alt="${producto.nombre || 'Producto'}" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-title">${producto.nombre || 'Sin nombre'}</h3>
+                                <div class="product-price">$ ${producto.precio || '0'}</div>
+                                <div class="product-sizes"><strong>Tallas:</strong> ${producto.tallas || 'Única'}</div>
+                                <div class="product-desc">${producto.descripcion || ''}</div>
+                                <a href="https://wa.me/${PHONE_WHATSAPP}?text=${mensaje}" target="_blank" class="btn-whatsapp">Comprar por WhatsApp</a>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    }
+                }
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="no-products">
+                        <p>Error al cargar los productos en tiempo real. Comprueba tu conexión o agrega un producto desde el <a href="/admin/" style="color: #27ae60; font-weight: bold;">Panel de Administración</a>.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function parseMarkdownFrontmatter(text) {
+            let data = {};
+            const match = text.match(/---([\s\S]*?)---/);
+            if (match) {
+                const lines = match[1].split('\n');
+                lines.forEach(line => {
+                    const parts = line.split(':');
+                    if (parts.length >= 2) {
+                        const key = parts[0].trim();
+                        const val = parts.slice(1).join(':').trim().replace(/^["'](.*)["']$/, '$1');
+                        data[key] = val;
+                    }
+                });
+            }
+            return data;
+        }
+
+        cargarProductosGitHub();
     </script>
 </body>
 </html>
