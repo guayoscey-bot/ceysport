@@ -10,7 +10,8 @@ collections:
     label: "Productos"
     folder: "content/productos"
     create: true
-    format: "json" # Esto asegura que se guarden como JSON limpios y fáciles de leer
+    format: "json"
+    identifier_field: "nombre"
     slug: "{{slug}}"
     fields:
       - {label: "Nombre del Producto", name: "nombre", widget: "string"}
