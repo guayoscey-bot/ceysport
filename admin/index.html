@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración - CEY SPORT</title>
-    <!-- Configuración explícita para evitar errores de ruta en el CMS -->
-    <script>
-      if (window.location.protocol === "file:") {
-        window.CMS_MANUAL_INIT = true;
-      }
-    </script>
-    <!-- Incluimos Netlify Identity para el inicio de sesión seguro -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</head>
-<body>
-    <!-- Script principal de Decap CMS apuntando de forma absoluta al archivo de configuración -->
-    <script>
-      window.CMS_CONFIGURATION_PATH = '/admin/config.yml';
-    </script>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-</body>
-</html>
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "img/productos"
+public_folder: "/img/productos"
+
+collections:
+  - name: "productos"
+    label: "Productos"
+    folder: "content/productos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Nombre del Producto", name: "nombre", widget: "string"}
+      - {label: "Precio", name: "precio", widget: "number", value_type: "int"}
+      - {label: "Imagen del Guayo / Producto", name: "imagen", widget: "image"}
+      - {label: "Tallas Disponibles", name: "tallas", widget: "string", hint: "Ejemplo: 38, 39, 40, 41"}
+      - {label: "Descripción", name: "descripcion", widget: "text", required: false}
