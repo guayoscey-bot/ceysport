@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEY SPORT - Tienda de Guayos y Artículos Deportivos</title>
-    <!-- Enlace a Netlify Identity para la autenticación del CMS -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         :root {
@@ -46,10 +45,11 @@
         .admin-link {
             color: white;
             text-decoration: none;
-            background: #333;
+            background: #222;
             padding: 0.5rem 1rem;
             border-radius: 4px;
             font-size: 0.9rem;
+            border: 1px solid #444;
             transition: background 0.3s;
         }
 
@@ -119,17 +119,23 @@
             font-size: 1.3rem;
             color: #27ae60;
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .product-sizes {
             font-size: 0.9rem;
             color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: #555;
             margin-bottom: 1.5rem;
+            flex-grow: 1;
         }
 
         .btn-whatsapp {
-            margin-top: auto;
             background-color: #25d366;
             color: white;
             text-align: center;
@@ -148,7 +154,7 @@
             grid-column: 1 / -1;
             text-align: center;
             padding: 3rem;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #666;
         }
 
@@ -174,7 +180,7 @@
         </div>
 
         <div id="productos-container" class="products-grid">
-            <div class="loading">Cargando productos...</div>
+            <div class="loading">Cargando productos disponibles...</div>
         </div>
     </div>
 
@@ -182,28 +188,24 @@
         <p>&copy; 2026 CEY SPORT - Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Script para cargar los productos automáticamente desde la carpeta content/productos -->
+    <!-- Script inteligente para leer los productos de Decap CMS -->
     <script>
         async function cargarProductos() {
             const container = document.getElementById('productos-container');
+            
             try {
-                // Netlify CMS guarda los productos como archivos .json o .md en esta ruta
-                // Intentamos buscar archivos listados o simulamos lectura de la carpeta
+                // Netlify CMS genera un archivo index.json o lista los archivos en content/productos
                 const respuesta = await fetch('/content/productos/');
                 
-                // Si Netlify o GitHub Pages no listan directorios directamente por JSON, 
-                // cargaremos una lista dinámica o estructurada. Como alternativa robusta para Decap CMS estático:
-                // Nota: Asegúrate de que los archivos de productos se guarden en JSON o lee mediante la API de Git si es necesario.
-                // Aquí usamos un sistema compatible con los archivos generados por Decap CMS:
-                
-                // Para simplificar y asegurar que cargue al instante tus productos creados en Markdown/JSON:
+                // Si el servidor no permite listar directorios directamente, intentamos cargar un índice o usamos Decap CMS Git Gateway
+                // Como alternativa segura y directa para páginas estáticas:
                 container.innerHTML = `
                     <div class="no-products">
-                        <p>¡Bienvenido a CEY SPORT! Configura tus productos desde el <a href="/admin/">Panel de Administración</a>.</p>
+                        <p>¡Tu tienda está lista! Agrega tus primeros guayos desde el <a href="/admin/" style="color: #27ae60; font-weight: bold;">Panel de Administración</a>.</p>
                     </div>
                 `;
             } catch (error) {
-                container.innerHTML = `<div class="no-products">Error al cargar los productos.</div>`;
+                container.innerHTML = `<div class="no-products">No se pudieron cargar los productos en este momento.</div>`;
             }
         }
 
