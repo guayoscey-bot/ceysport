@@ -6,10 +6,19 @@
   <title>Panel de Administración - CEY SPORT</title>
 </head>
 <body>
-  <!-- Cargamos StaticCMS en lugar de Decap -->
-  <script src="https://unpkg.com/@staticcms/app@^1.0.0/dist/static-cms-app.js"></script>
+  <script src="https://unpkg.com/@staticcms/app@^1.4.0/dist/static-cms-app.js"></script>
   <script>
-    CMS.init();
+    window.CMS.init({
+      config: {
+        backend: {
+          name: "github",
+          repo: "guayoscey-bot/ceysport",
+          branch: "main",
+          app_id: "Ov231iIujfecDzGLsNRE",
+          auth_type: "pkce"
+        }
+      }
+    });
   </script>
 </body>
 </html>
