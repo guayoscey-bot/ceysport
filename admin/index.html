@@ -6,7 +6,10 @@
   <title>Panel de Administración - CEY SPORT</title>
 </head>
 <body>
-  <!-- Usamos una versión estable anterior para evitar errores de renderizado -->
-  <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+  <!-- Cargamos StaticCMS en lugar de Decap -->
+  <script src="https://unpkg.com/@staticcms/app@^1.0.0/dist/static-cms-app.js"></script>
+  <script>
+    CMS.init();
+  </script>
 </body>
 </html>
