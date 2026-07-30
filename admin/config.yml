@@ -3,8 +3,7 @@ backend:
   repo: guayoscey-bot/ceysport
   branch: main
   app_id: 'Ov231iIujfecDzGLsNRE'
-  base_url: https://api.github.com
-  auth_type: pkce
+  auth_type: pkces
 
 media_folder: "img/productos"
 public_folder: "/img/productos"
