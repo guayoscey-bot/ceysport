@@ -2,12 +2,7 @@ backend:
   name: github
   repo: guayoscey-bot/ceysport
   branch: main
-  auth_type: pkce
   app_id: 'Ov231iIujfecDzGLsNRE'
-  commit_messages:
-    create: "Crear producto {{slug}}"
-    update: "Actualizar producto {{slug}}"
-    delete: "Eliminar producto {{slug}}"
 
 media_folder: "img/productos"
 public_folder: "/img/productos"
