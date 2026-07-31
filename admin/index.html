@@ -1,47 +1,137 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel de Administración - CEY SPORT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - CEY SPORT</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 600px; background: white; padding: 30px; margin: 40px auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #e91e63; font-size: 24px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #e91e63; color: white; border: none; padding: 12px; width: 100%; font-size: 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #c2185b; }
+        #mensaje { margin-top: 15px; text-align: center; font-weight: bold; }
+    </style>
 </head>
 <body>
-  <div id="nc-root"></div>
-  <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
-  <script>
-    CMS.init({
-      config: {
-        backend: {
-          name: "github",
-          repo: "guayoscey-bot/ceysport",
-          branch: "main",
-          auth_type: "token",
-          token: "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"
-        },
-        media_folder: "img/productos",
-        public_folder: "/img/productos",
-        collections: [
-          {
-            name: "productos",
-            label: "Productos",
-            folder: "content/productos",
-            create: true,
-            format: "json",
-            identifier_field: "nombre",
-            slug: "{{slug}}",
-            fields: [
-              {label: "Nombre del Producto", name: "nombre", widget: "string"},
-              {label: "Categoría", name: "Categoria", widget: "select", options: ["guayos", "sintetica", "futsal", "guantes", "accesorios"]},
-              {label: "Marca / Subcategoría", name: "Marca", widget: "string", hint: "Ej: Adidas, Nike, Puma, Antideslizante"},
-              {label: "Precio (Solo números)", name: "precio", widget: "number", value_type: "int"},
-              {label: "Imagen del Producto", name: "imagen_url", widget: "image"},
-              {label: "Tallas Disponibles", name: "tallas", widget: "string", hint: "Ejemplo: 38, 39, 40, 41"},
-              {label: "Descripción", name: "descripcion", widget: "text", required: false}
-            ]
-          }
-        ]
-      }
-    });
-  </script>
+    <div class="container">
+        <h1>CEY SPORT - Agregar Producto</h1>
+        <form id="productForm">
+            <div class="form-group">
+                <label>Nombre del Producto:</label>
+                <input type="text" id="nombre" required placeholder="Ej: Guayos Nike Mercurial">
+            </div>
+            <div class="form-group">
+                <label>Categoría:</label>
+                <select id="categoria">
+                    <option value="guayos">Guayos</option>
+                    <option value="sintetica">Sintética</option>
+                    <option value="futsal">Futsal</option>
+                    <option value="guantes">Guantes</option>
+                    <option value="accesorios">Accesorios</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Marca / Subcategoría:</label>
+                <input type="text" id="marca" required placeholder="Ej: Nike, Adidas">
+            </div>
+            <div class="form-group">
+                <label>Precio (Solo números):</label>
+                <input type="number" id="precio" required placeholder="Ej: 150000">
+            </div>
+            <div class="form-group">
+                <label>Ruta de la Imagen:</label>
+                <input type="text" id="imagen" required value="img/productos/" placeholder="img/productos/foto.jpg">
+            </div>
+            <div class="form-group">
+                <label>Tallas Disponibles:</label>
+                <input type="text" id="tallas" required placeholder="Ej: 38, 39, 40, 41">
+            </div>
+            <div class="form-group">
+                <label>Descripción:</label>
+                <textarea id="descripcion" rows="3" placeholder="Detalles del producto..."></textarea>
+            </div>
+            <button type="submit">Guardar Producto en la Tienda</button>
+        </form>
+        <div id="mensaje"></div>
+    </div>
+
+    <script>
+        const TOKEN = "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";
+        const REPO = "guayoscey-bot/ceysport";
+        const BRANCH = "main";
+
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const msg = document.getElementById('mensaje');
+            btn.disabled = true;
+            msg.style.color = "blue";
+            msg.textContent = "Guardando producto...";
+
+            const nombre = document.getElementById('nombre').value;
+            const slug = nombre.toLowerCase().replace(/[^a-z0-9]/g, '-');
+            const path = `content/productos/${slug}.json`;
+
+            const dataObject = {
+                nombre: nombre,
+                Categoria: document.getElementById('categoria').value,
+                Marca: document.getElementById('marca').value,
+                precio: Number(document.getElementById('precio').value),
+                imagen_url: document.getElementById('imagen').value,
+                tallas: document.getElementById('tallas').value,
+                descripcion: document.getElementById('descripcion').value
+            };
+
+            const contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(dataObject, null, 2))));
+
+            try {
+                // Verificar si el archivo ya existe para obtener su SHA
+                let sha = null;
+                const checkRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`, {
+                    headers: { "Authorization": `token ${TOKEN}` }
+                });
+                if (checkRes.ok) {
+                    const fileData = await checkRes.json();
+                    sha = fileData.sha;
+                }
+
+                // Guardar/Crear archivo en GitHub
+                const bodyData = {
+                    message: `Crear/Actualizar producto: ${nombre}`,
+                    content: contentEncoded,
+                    branch: BRANCH
+                };
+                if (sha) bodyData.sha = sha;
+
+                const saveRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${TOKEN}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(bodyData)
+                });
+
+                if (saveRes.ok) {
+                    msg.style.color = "green";
+                    msg.textContent = "¡Producto guardado y publicado con éxito!";
+                    document.getElementById('productForm').reset();
+                    document.getElementById('imagen').value = "img/productos/";
+                } else {
+                    const err = await saveRes.json();
+                    throw new Error(err.message || "Error al guardar");
+                }
+            } catch (error) {
+                msg.style.color = "red";
+                msg.textContent = "Error: " + error.message;
+            } finally {
+                btn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>
