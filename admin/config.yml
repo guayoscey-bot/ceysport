@@ -2,6 +2,7 @@ backend:
   name: github
   repo: guayoscey-bot/ceysport
   branch: main
+  base_url: https://decap-git-gateway.netlify.app
 
 media_folder: "img/productos"
 public_folder: "/img/productos"
