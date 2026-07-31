@@ -4,138 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEY SPORT - Tienda de Guayos y Artículos Deportivos</title>
-    <style>
-        :root {
-            --primary-color: #111111;
-            --accent-color: #00ff66;
-            --bg-color: #f4f4f9;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-        }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
-        header { background-color: var(--primary-color); color: white; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        header h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; }
-        header h1 span { color: var(--accent-color); }
-        .admin-link { color: white; text-decoration: none; background: #222; padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.9rem; border: 1px solid #444; transition: background 0.3s; }
-        .admin-link:hover { background: #444; }
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-        .banner { text-align: center; margin-bottom: 2rem; }
-        .banner h2 { font-size: 2rem; color: var(--primary-color); }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
-        .product-card { background: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .product-image { width: 100%; height: 250px; object-fit: cover; background-color: #eee; }
-        .product-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
-        .product-title { font-size: 1.2rem; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--primary-color); }
-        .product-price { font-size: 1.3rem; color: #27ae60; font-weight: bold; margin-bottom: 0.5rem; }
-        .product-sizes { font-size: 0.9rem; color: #666; margin-bottom: 1rem; }
-        .product-desc { font-size: 0.9rem; color: #555; margin-bottom: 1.5rem; flex-grow: 1; }
-        .btn-whatsapp { background-color: #25d366; color: white; text-align: center; padding: 0.75rem; border-radius: 4px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
-        .btn-whatsapp:hover { background-color: #1ebe5d; }
-        .loading, .no-products { grid-column: 1 / -1; text-align: center; padding: 3rem; font-size: 1.1rem; color: #666; }
-        footer { text-align: center; padding: 2rem; background-color: var(--primary-color); color: white; margin-top: 3rem; }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <header>
-        <h1>CEY <span>SPORT</span></h1>
-        <a href="/admin/" class="admin-link">Panel Admin</a>
+    <header class="header">
+        <img src="https://i.ibb.co/HTT43j9y/fondo-cey.png" alt="Logo CEY SPORT" class="logo-superior" style="display:none;">
+        <h1 class="title">CEY <span>SPORT</span></h1>
+        <div style="margin-top: 15px;">
+            <a href="/admin/" class="admin-link" style="color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 8px 15px; border-radius: 4px; font-weight: bold;">Panel Admin</a>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="banner">
-            <h2>Catálogo de Productos</h2>
-        </div>
-        <div id="productos-container" class="products-grid">
-            <div class="loading">Cargando tus guayos...</div>
+    <nav class="nav-bar">
+        <button onclick="filtrar('guayos', this)" class="active">Guayos</button>
+        <button onclick="filtrar('sintetica', this)">Sintética</button>
+        <button onclick="filtrar('futsal', this)">Futsal</button>
+        <button onclick="filtrar('guantes', this)">Guantes</button>
+        <button onclick="filtrar('accesorios', this)">Accesorios</button>
+    </nav>
+
+    <div id="subfiltros" class="sub-nav"></div>
+
+    <div id="filtro-precio" style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <select id="selectPrecio" onchange="filtrarPorPrecio(this.value)" style="background: #000; color: #fff; border: 1px solid #444; padding: 8px; border-radius: 4px;">
+            <option value="todos">Todos los precios</option>
+            <option value="0-150000">Menos de $150.000</option>
+            <option value="150000-250000">$150.000 - $250.000</option>
+            <option value="250000-9999999">Más de $250.000</option>
+        </select>
+    </div>
+
+    <main class="catalog-grid" id="lista">
+        <p style="grid-column: 1/-1; text-align: center;">Cargando productos...</p>
+    </main>
+
+    <div class="social-float">
+        <a href="https://wa.me/573242445670" target="_blank" class="btn-float wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="https://instagram.com" target="_blank" class="btn-float ig"><i class="fab fa-instagram"></i> Instagram</a>
+    </div>
+
+    <!-- Modal de Pedido -->
+    <div id="modalPedido" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" onclick="cerrarPedido()">&times;</button>
+            <h3 style="color: var(--gold); font-family: 'Orbitron', sans-serif; text-align: center;">Completar Pedido</h3>
+            <form id="formPedido" style="display: flex; flex-direction: column; gap: 10px;">
+                <input type="text" id="pNombre" placeholder="Tu Nombre Completo" required style="padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+                <input type="text" id="pDoc" placeholder="Cédula o TI" required style="padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+                <input type="text" id="pCiudad" placeholder="Ciudad / Municipio" required style="padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+                <input type="text" id="pDir" placeholder="Dirección de entrega" required style="padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+                <input type="tel" id="pTel" placeholder="Número de Teléfono" required style="padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+                <button type="submit" class="btn-action" style="margin-top: 10px;">ENVIAR PEDIDO A WHATSAPP</button>
+            </form>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 CEY SPORT - Todos los derechos reservados.</p>
-    </footer>
+    <!-- Modal Guía de Tallas -->
+    <div id="modalTallas" class="modal-overlay" onclick="cerrarGuiaTallas()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="cerrarGuiaTallas()">&times;</button>
+            <h3 style="color: var(--gold); text-align: center;">Guía de Tallas</h3>
+            <img src="https://i.ibb.co/GuiaTallasEjemplo.png" alt="Guía de Tallas" class="modal-img" id="imgGuiaTallas" onerror="this.src='https://via.placeholder.com/400x300?text=Guia+de+Tallas'">
+        </div>
+    </div>
 
-    <script>
-        const REPO_OWNER = "guayoscey-bot";
-        const REPO_NAME = "ceysport";
-        const BRANCH = "main";
-        const PHONE_WHATSAPP = "573000000000"; // Reemplaza con tu número de WhatsApp real si lo deseas
-
-        async function cargarProductos() {
-            const container = document.getElementById('productos-container');
-            try {
-                const urlApi = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/content/productos?ref=${BRANCH}`;
-                const response = await fetch(urlApi);
-                if (!response.ok) throw new Error("Error al conectar con GitHub");
-
-                const files = await response.json();
-                if (!files || files.length === 0) {
-                    container.innerHTML = `<div class="no-products"><p>No hay productos todavía.</p></div>`;
-                    return;
-                }
-
-                container.innerHTML = '';
-
-                for (const file of files) {
-                    if (file.name.endsWith('.json') || file.name.endsWith('.md')) {
-                        const fileRes = await fetch(file.download_url);
-                        const text = await fileRes.text();
-                        
-                        let producto = {};
-                        if (file.name.endsWith('.json')) {
-                            try { producto = JSON.parse(text); } catch(e){}
-                        } else {
-                            producto = parseMarkdownFrontmatter(text);
-                        }
-
-                        const card = document.createElement('div');
-                        card.className = 'product-card';
-                        
-                        const nombreProd = producto.nombre || "Guayos deportivos";
-                        const precioProd = producto.precio || "0";
-                        const tallasProd = producto.tallas || "Única";
-                        const descProd = producto.descripcion || "";
-                        const imgProd = producto.imagen || "https://via.placeholder.com/300";
-
-                        const mensaje = encodeURIComponent(`¡Hola! Estoy interesado en el producto: ${nombreProd} - Precio: $${precioProd}`);
-
-                        card.innerHTML = `
-                            <img src="${imgProd}" alt="${nombreProd}" class="product-image">
-                            <div class="product-info">
-                                <h3 class="product-title">${nombreProd}</h3>
-                                <div class="product-price">$ ${precioProd}</div>
-                                <div class="product-sizes"><strong>Tallas:</strong> ${tallasProd}</div>
-                                <div class="product-desc">${descProd}</div>
-                                <a href="https://wa.me/${PHONE_WHATSAPP}?text=${mensaje}" target="_blank" class="btn-whatsapp">Comprar por WhatsApp</a>
-                            </div>
-                        `;
-                        container.appendChild(card);
-                    }
-                }
-            } catch (error) {
-                container.innerHTML = `<div class="no-products"><p>Agrega productos desde el <a href="/admin/" style="color:#27ae60;">Panel de Administración</a>.</p></div>`;
-            }
-        }
-
-        function parseMarkdownFrontmatter(text) {
-            let data = {};
-            const match = text.match(/---([\s\S]*?)---/);
-            if (match) {
-                const lines = match[1].split('\n');
-                lines.forEach(line => {
-                    const parts = line.split(':');
-                    if (parts.length >= 2) {
-                        const key = parts[0].trim();
-                        const val = parts.slice(1).join(':').trim().replace(/^["'](.*)["']$/, '$1');
-                        data[key] = val;
-                    }
-                });
-            }
-            return data;
-        }
-
-        cargarProductos();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
