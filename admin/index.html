@@ -7,5 +7,39 @@
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+  <script>
+    CMS.init({
+      config: {
+        backend: {
+          name: "github",
+          repo: "guayoscey-bot/ceysport",
+          branch: "main",
+          base_url: "https://api.github.com"
+        },
+        media_folder: "img/productos",
+        public_folder: "/img/productos",
+        collections: [
+          {
+            name: "productos",
+            label: "Productos",
+            folder: "content/productos",
+            create: true,
+            format: "json",
+            identifier_field: "nombre",
+            slug: "{{slug}}",
+            fields: [
+              {label: "Nombre del Producto", name: "nombre", widget: "string"},
+              {label: "Categoría", name: "Categoria", widget: "select", options: ["guayos", "sintetica", "futsal", "guantes", "accesorios"]},
+              {label: "Marca / Subcategoría", name: "Marca", widget: "string", hint: "Ej: Adidas, Nike, Puma, Antideslizante"},
+              {label: "Precio (Solo números)", name: "precio", widget: "number", value_type: "int"},
+              {label: "Imagen del Producto", name: "imagen_url", widget: "image"},
+              {label: "Tallas Disponibles", name: "tallas", widget: "string", hint: "Ejemplo: 38, 39, 40, 41"},
+              {label: "Descripción", name: "descripcion", widget: "text", required: false}
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
