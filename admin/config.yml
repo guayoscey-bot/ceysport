@@ -18,7 +18,9 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Nombre del Producto", name: "nombre", widget: "string"}
-      - {label: "Precio", name: "precio", widget: "number", value_type: "int"}
-      - {label: "Imagen del Guayo / Producto", name: "imagen", widget: "image"}
+      - {label: "Categoría", name: "Categoria", widget: "select", options: ["guayos", "sintetica", "futsal", "guantes", "accesorios"]}
+      - {label: "Marca / Subcategoría", name: "Marca", widget: "string", hint: "Ej: Adidas, Nike, Puma, Antideslizante"}
+      - {label: "Precio (Solo números)", name: "precio", widget: "number", value_type: "int"}
+      - {label: "Imagen del Producto", name: "imagen_url", widget: "image"}
       - {label: "Tallas Disponibles", name: "tallas", widget: "string", hint: "Ejemplo: 38, 39, 40, 41"}
       - {label: "Descripción", name: "descripcion", widget: "text", required: false}
