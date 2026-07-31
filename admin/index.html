@@ -6,39 +6,6 @@
   <title>Panel de Administración - CEY SPORT</title>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script>
-    CMS.init({
-      config: {
-        backend: {
-          name: "github",
-          repo: "guayoscey-bot/ceysport",
-          branch: "main",
-          app_id: "Ov231iIujfecDzGLsNRE",
-          auth_type: "pkce"
-        },
-        media_folder: "img/productos",
-        public_folder: "/img/productos",
-        collections: [
-          {
-            name: "productos",
-            label: "Productos",
-            folder: "content/productos",
-            create: true,
-            format: "json",
-            identifier_field: "nombre",
-            slug: "{{slug}}",
-            fields: [
-              {label: "Nombre del Producto", name: "nombre", widget: "string"},
-              {label: "Precio", name: "precio", widget: "number", value_type: "int"},
-              {label: "Imagen del Guayo / Producto", name: "imagen", widget: "image"},
-              {label: "Tallas Disponibles", name: "tallas", widget: "string", hint: "Ejemplo: 38, 39, 40, 41"},
-              {label: "Descripción", name: "descripcion", widget: "text", required: false}
-            ]
-          }
-        ]
-      }
-    });
-  </script>
+  <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
 </body>
 </html>
